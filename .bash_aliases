@@ -10,6 +10,7 @@ alias dir='ls -l'
 alias hg='history | grep'
 alias c='cat'
 alias d='cd'
+alias cl='clear'
 
 alias agi='sudo apt-get install'
 alias shutdown='sudo shutdown -h now'
