@@ -1,0 +1,14 @@
+[user]
+	name = Antonio
+	email = berser.ar@gmail.com
+[color]
+  ui = true
+[alias]
+  br = branch
+  ci = commit
+  co = checkout
+  df = diff
+  st = status
+  a = add
+[merge]
+  log = true
