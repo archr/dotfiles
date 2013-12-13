@@ -13,5 +13,7 @@ alias d='cd'
 alias cl='clear'
 
 alias agi='sudo apt-get install'
-alias shutdown='sudo shutdown -h now'
-alias restart='sudo shutdown -r now' # "sudo chmod u+s /sbin/shutdown"
+alias shutdown='shutdown -h now'
+alias restart='shutdown -r now'
+
+alias mc='NODE_ENV=test mocha'
