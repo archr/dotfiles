@@ -1,0 +1,61 @@
+{
+  "in_process_packages":
+  [
+  ],
+  "installed_packages":
+  [
+    "Alignment",
+    "All Autocomplete",
+    "Babel",
+    "Better CoffeeScript",
+    "Code2Docs Documentation Generator (docco)",
+    "Coffee Formatter",
+    "CoffeeCompile",
+    "CoffeeLint",
+    "CoffeeScript",
+    "Corona Editor",
+    "DashDoc",
+    "Desert Night Color Scheme",
+    "DocBlockr",
+    "EJS",
+    "Elixir",
+    "GitGutter",
+    "Github Color Theme",
+    "GitHub Flavored Markdown Preview",
+    "Glue",
+    "Handlebars",
+    "INI",
+    "Jade",
+    "JavaScript & Coffeescript Build Systems",
+    "JSHint Gutter",
+    "JSX",
+    "LESS",
+    "Levels",
+    "Markdown HTML Preview",
+    "Markdown Preview",
+    "MarkdownBuild",
+    "Oceanic Next Color Scheme",
+    "Package Control",
+    "PlainTasks",
+    "Pretty JSON",
+    "ReactJS",
+    "SassBeautify",
+    "SFTP",
+    "SideBarEnhancements",
+    "Stylus",
+    "sublime-jslint",
+    "sublime-react-es6",
+    "SublimeLinter",
+    "Syntax Highlighting for Sass",
+    "Theme - Night",
+    "Theme - Spacegray",
+    "Todo",
+    "Tomorrow Color Schemes",
+    "WakaTime"
+  ],
+  "repositories":
+  [
+    "https://github.com/masondesu/Sublime-JSX",
+    "https://github.com/archr/sublime-react-es6"
+  ]
+}

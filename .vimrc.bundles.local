@@ -1,3 +1,9 @@
 Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'digitaltoad/vim-jade'
-
+Bundle 'chriskempson/base16-vim'
+Bundle 'mattn/emmet-vim'
+Bundle 'wakatime/vim-wakatime'
+Bundle 'mxw/vim-jsx'
+Bundle 'archr/javascript-libraries-syntax.vim'
+Bundle 'archr/yajs.vim'
+Bundle 'airblade/vim-gitgutter'
