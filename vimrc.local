@@ -1,0 +1,89 @@
+set encoding=utf-8
+set nospell
+
+let base16colorspace=256
+set t_Co=256
+colorscheme base16-tomorrow
+set background=dark
+
+set tabstop=2
+set shiftwidth=2
+
+let NERDTreeIgnore = ['node_modules', '.DS_Store', '.git', '.sass-cache', '\.sublime-project$', '\.sublime-workspace$', 'build', 'public', 'fonts', 'vendor', 'dist', 'css', 'bower_components']
+
+let g:jsx_ext_required = 0
+
+let g:syntastic_check_on_open = 1
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:Powerline_symbols = 'fancy'
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme= 'powerlineish'
+let g:airline_powerline_fonts=1
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+let g:used_javascript_libs = 'react,flux,underscore,chai,angularjs'
+
+let g:user_emmet_leader_key='<C-Z>'
+
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" " Use smartcase.
+let g:neocomplete#enable_smart_case = 1"
+
+let g:neosnippet#snippets_directory="~/dev/github/vim-snippets"
+
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+
+" Set identation
+command! -nargs=* Stab call Stab()
+
+function! Stab()
+  let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
+  if l:tabstop > 0
+    let &l:sts = l:tabstop
+    let &l:ts = l:tabstop
+    let &l:sw = l:tabstop
+  endif
+  call SummarizeTabs()
+endfunction
+
+function! SummarizeTabs()
+  try
+    echohl ModeMsg
+    echon 'tabstop='.&l:ts
+    echon ' shiftwidth='.&l:sw
+    echon ' softtabstop='.&l:sts
+    if &l:et
+      echon ' expandtab'
+    else
+      echon ' noexpandtab'
+    endif
+  finally
+    echohl None
+  endtry
+endfunction
