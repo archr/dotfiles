@@ -36,11 +36,18 @@ NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'digitaltoad/vim-jade'
+NeoBundle 'easymotion/vim-easymotion'
+NeoBundle 'bling/vim-bufferline'
+NeoBundle 'gcmt/wildfire.vim'
+NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive' }
 
+NeoBundle 'othree/yajs.vim'
+NeoBundle 'othree/es.next.syntax.vim'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'archr/javascript-libraries-syntax.vim'
-NeoBundle 'archr/yajs.vim'
-NeoBundle 'pangloss/vim-javascript'
+" NeoBundle 'pangloss/vim-javascript'
 NeoBundleLazy 'elzr/vim-json', {'autoload': {'filetypes': ['json']}}
 NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html','css', 'javascript']}}
 
@@ -79,6 +86,7 @@ set foldenable
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 set clipboard=unnamed
+" set foldmethod=syntax
 
 let mapleader = ','
 
@@ -105,15 +113,19 @@ endfun
 autocmd FileType javascript,css autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
 " ctrlp.vim
-let g:ctrlp_match_window_bottom = 1
-let g:ctrlp_match_window_reversed = 0
-
-let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
-  \ 'dir': 'node_modules\|\.DS_Store$\|bower_components\|public\|\.git$'
+  \ 'dir': 'node_modules\|\.DS_Store$\|bower_components\|public\|\.git$\|dist'
   \ }
+
+if executable('ag')
+  let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
+endif
+
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
 
 " vim-airline
 set laststatus=2
@@ -124,6 +136,7 @@ let g:airline_theme= 'powerlineish'
 
 " syntastic
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'eslint_d'
 
 
 " netrw
@@ -218,3 +231,31 @@ endif
 
 let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/dev/github/vim-snippets'
+
+command WQ wq
+command Wq wq
+command W w
+command Q q
+
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+set mouse=a
+
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+
+let g:used_javascript_libs = 'underscore,react,chai'
