@@ -4,11 +4,26 @@
   },
   {
     "link": {
-      "~/.zshrc": "zshrc",
-      "~/.vimrc": "vimrc",
-      "~/.oh-my-zsh": "oh-my-zsh",
-      "~/.gitconfig": "gitconfig",
-      "~/.gitignore_global": "gitignore_global"
+      "~/.zshrc": {
+        "force": true,
+        "path": "zshrc"
+      },
+      "~/.vimrc": {
+        "force": true,
+        "path": "vimrc"
+      },
+      "~/.gitconfig": {
+        "force": true,
+        "path": "gitconfig"
+      },
+      "~/.gitignore_global": {
+        "force": true,
+        "path": "gitignore_global"
+      },
+      "~/.oh-my-zsh": {
+        "force": true,
+        "path": "oh-my-zsh"
+      }
     }
   },
   {
