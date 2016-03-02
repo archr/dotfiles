@@ -72,6 +72,7 @@ set expandtab
 set nospell
 set encoding=utf-8
 
+set nowrap
 set backspace=indent,eol,start
 set cursorline
 set number

@@ -1,5 +1,5 @@
 export ZSH=/Users/antonio/.oh-my-zsh
-ZSH_THEME="kennethreitz"
+ZSH_THEME="zhann"
 CASE_SENSITIVE="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
