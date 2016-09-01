@@ -21,6 +21,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 NeoBundle 'chriskempson/base16-vim'
 NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
@@ -42,12 +43,16 @@ NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'gcmt/wildfire.vim'
 NeoBundle 'tpope/vim-fugitive', { 'augroup' : 'fugitive' }
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'vitalk/vim-simple-todo'
 
-NeoBundle 'othree/yajs.vim'
+NeoBundle 'elixir-lang/vim-elixir'
+" NeoBundle 'othree/yajs.vim'
 NeoBundle 'othree/es.next.syntax.vim'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'archr/javascript-libraries-syntax.vim'
-" NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'godlygeek/tabular'
 NeoBundleLazy 'elzr/vim-json', {'autoload': {'filetypes': ['json']}}
 NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html','css', 'javascript']}}
 
@@ -64,7 +69,7 @@ set t_Co=256
 colorscheme base16-tomorrow
 let base16colorspace=256
 set background=dark
-set guifont=Input\ Mono:13
+set guifont=Input\ Mono:14
 
 set tabstop=2
 set shiftwidth=2
@@ -83,11 +88,16 @@ set smartcase
 set wildmenu
 set wildmode=list:longest,full
 set whichwrap=b,s,h,l,<,>,[,]
-set foldenable
+" set foldenable
 set list
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:.
 set clipboard=unnamed
 " set foldmethod=syntax
+set autoindent
+set smartindent
+set expandtab
+set splitright
+"set noexpandtab " tabs
 
 let mapleader = ','
 
@@ -116,7 +126,7 @@ autocmd FileType javascript,css autocmd BufWritePre <buffer> :call <SID>StripTra
 " ctrlp.vim
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = {
-  \ 'dir': 'node_modules\|\.DS_Store$\|bower_components\|public\|\.git$\|dist'
+  \ 'dir': 'node_modules\|\.DS_Store$\|bower_components\|public1\|\.git$\|dist\|ios\|build\|android'
   \ }
 
 if executable('ag')
@@ -127,17 +137,20 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+" vim-jsx
+let g:jsx_ext_required = 0
 
 " vim-airline
 set laststatus=2
 let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme= 'powerlineish'
-
 
 " syntastic
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exec = 'eslint_d'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 
 " netrw
@@ -201,14 +214,14 @@ map <C-e> <plug>NERDTreeTabsToggle<CR>
 map <leader>e :NERDTreeFind<CR>
 nmap <leader>nt :NERDTreeFind<CR>
 
-let NERDTreeShowBookmarks=1
-let NERDTreeIgnore=['\.py[cd]$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', 'node_modules', 'public', 'build', 'bower_components', '.DS_Store', '\.sublime-project$', '\.sublime-workspace$', 'dist']
+"let NERDTreeShowBookmarks=1
+let NERDTreeIgnore=['\.py[cd]$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', 'node_modules', 'public1', 'build', 'bower_components', '.DS_Store', '\.sublime-project$', '\.sublime-workspace$', 'dist']
 let NERDTreeChDirMode=0
 let NERDTreeQuitOnOpen=1
-let NERDTreeMouseMode=2
-let NERDTreeShowHidden=1
-let NERDTreeKeepTreeInNewTab=1
-let g:nerdtree_tabs_open_on_gui_startup=0
+" let NERDTreeMouseMode=2
+" let NERDTreeShowHidden=1
+" let NERDTreeKeepTreeInNewTab=1
+" let g:nerdtree_tabs_open_on_gui_startup=0
 
 
 " Plugin key-mappings.
