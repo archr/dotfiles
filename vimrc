@@ -20,6 +20,7 @@ Plug 'mileszs/ack.vim'
 Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
+Plug 'sbdchd/neoformat'
 
 " javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
@@ -96,23 +97,19 @@ endfun
 
 autocmd FileType javascript,css autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
-
 " vim-jsx
 let g:jsx_ext_required = 0
-
 
 " vim-airline
 set laststatus=2
 let g:airline_powerline_fonts=1
 let g:airline_theme= 'powerlineish'
 
-
 " syntastic
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exec = 'eslint_d'
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-
 
 " ctrlp.vim
 let g:ctrlp_working_path_mode = 'ra'
@@ -121,33 +118,23 @@ let g:ctrlp_custom_ignore = {
       \ 'dir': 'node_modules\|\.DS_Store$\|bower_components\|public1\|\.git$\|dist\|ios\|build\|android'
       \ }
 
-
 " ack.vim
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
 
 " netrw
 let g:netrw_liststyle = 3
 let g:netrw_list_hide = ".git,.sass-cache,.jpg,.png,.svg,.DS_Store,node_modules,.ebextensions,build,bower_components"
 let g:netrw_preview = 1
 
-
 " vim-indent-guides
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 
-
 " javascript-libraries-syntax.vim
 let g:used_javascript_libs = 'underscore,react,chai'
-
-
-" neospinnet
-let g:neosnippet#enable_snipmate_compatibility = 1
-let g:neosnippet#snippets_directory='~/dev/github/vim-snippets'
-
 
 " neocomplete.vim
 let g:acp_enableAtStartup = 0
@@ -169,8 +156,10 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-
 " neosnippet.vim
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippets_directory='~/dev/github/vim-snippets'
+
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -182,4 +171,13 @@ let g:user_emmet_settings = {
       \    'quote_char': "'",
       \  },
       \}
+
+" neoformat
+let g:neoformat_javascript_standard = {
+      \ 'exe': 'prettier-standard',
+      \ 'args': ['--stdin'],
+      \ 'stdin': 1,
+      \ }
+
+let g:neoformat_enabled_javascript = ['standard']
 
