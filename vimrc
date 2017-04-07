@@ -13,6 +13,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/nerdtree'
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -123,10 +124,14 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-" netrw
-let g:netrw_liststyle = 3
-let g:netrw_list_hide = ".git,.sass-cache,.jpg,.png,.svg,.DS_Store,node_modules,.ebextensions,build,bower_components"
-let g:netrw_preview = 1
+" nerdtree
+map <C-e> <plug>NERDTreeTabsToggle<CR>
+map <leader>e :NERDTreeFind<CR>
+nmap <leader>nt :NERDTreeFind<CR>
+
+let NERDTreeIgnore=['\.py[cd]$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', 'node_modules', 'public1', 'build', 'bower_components', '.DS_Store', '\.sublime-project$', '\.sublime-workspace$', 'dist']
+let NERDTreeChDirMode=0
+let NERDTreeQuitOnOpen=1
 
 " vim-indent-guides
 let g:indent_guides_start_level = 2
