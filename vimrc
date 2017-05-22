@@ -189,4 +189,5 @@ let g:neoformat_javascript_standard = {
       \ }
 
 let g:neoformat_enabled_javascript = ['standard']
+:nmap <C-i> :Neoformat<CR>
 
