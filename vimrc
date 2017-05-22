@@ -131,8 +131,6 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
 map <leader>e :NERDTreeFind<CR>
-nmap <leader>nt :NERDTreeFind<CR>
-
 let NERDTreeIgnore=['\.py[cd]$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', 'node_modules', 'public1', 'build', 'bower_components', '.DS_Store', '\.sublime-project$', '\.sublime-workspace$', 'dist']
 let NERDTreeChDirMode=0
 let NERDTreeQuitOnOpen=1
