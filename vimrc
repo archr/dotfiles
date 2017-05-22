@@ -13,6 +13,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
+Plug 'scrooloose/nerdtree'
 Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -21,6 +22,7 @@ Plug 'gcmt/wildfire.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
 Plug 'sbdchd/neoformat'
+Plug 'digitaltoad/vim-pug'
 
 " javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
@@ -76,6 +78,11 @@ set undodir=~/.vim-tmp
 set nobackup
 set noswapfile
 set nowritebackup
+set relativenumber
+
+" Color colum max 120
+set colorcolumn=120
+highlight ColorColumn ctermbg=gray
 
 command WQ wq
 command Wq wq
@@ -115,18 +122,20 @@ let g:syntastic_check_on_wq = 0
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore = {
-      \ 'dir': 'node_modules\|\.DS_Store$\|bower_components\|public1\|\.git$\|dist\|ios\|build\|android'
+      \ 'dir': 'node_modules\|DS_Store$\|bower_components\|public1\|.git$\|dist\|ios\|build\|android'
       \ }
 
 " ack.vim
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
-" netrw
-let g:netrw_liststyle = 3
-let g:netrw_list_hide = ".git,.sass-cache,.jpg,.png,.svg,.DS_Store,node_modules,.ebextensions,build,bower_components"
-let g:netrw_preview = 1
+" nerdtree
+map <C-n> :NERDTreeToggle<CR>
+map <leader>e :NERDTreeFind<CR>
+nmap <leader>nt :NERDTreeFind<CR>
+
+let NERDTreeIgnore=['\.py[cd]$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', 'node_modules', 'public1', 'build', 'bower_components', '.DS_Store', '\.sublime-project$', '\.sublime-workspace$', 'dist']
+let NERDTreeChDirMode=0
+let NERDTreeQuitOnOpen=1
 
 " vim-indent-guides
 let g:indent_guides_start_level = 2
