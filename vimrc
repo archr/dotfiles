@@ -23,6 +23,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'mattn/emmet-vim', { 'for': ['javascript.jsx', 'html', 'css'] }
 Plug 'sbdchd/neoformat'
 Plug 'digitaltoad/vim-pug'
+Plug 'chriskempson/base16-vim'
+Plug 'tpope/vim-rhubarb'
+Plug 'machakann/vim-highlightedyank'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'colepeters/spacemacs-theme.vim'
 
 " javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
@@ -32,6 +37,8 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascri
 
 " elixir
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+
+Plug 'gcorne/vim-sass-lint'
 
 call plug#end()
 
@@ -46,8 +53,18 @@ let mapleader = ','
 
 colorscheme default
 
+if has('gui_running')
+  set noeb vb t_vb=
+  set anti enc=utf-8
+  set guifont=Source\ Code\ Pro:h13
+  set lines=80 columns=180 linespace=0
+  set transparency=2
+  colorscheme space-vim-dark
+  let g:space_vim_dark_background = 234
+  hi Comment cterm=italic
+endif
+
 set background=dark
-set guifont=Source\ Code\ Pro:14
 set mouse=a
 set tabstop=2
 set shiftwidth=2
@@ -83,6 +100,8 @@ set relativenumber
 " Color colum max 120
 set colorcolumn=120
 highlight ColorColumn ctermbg=gray
+let g:highlightedyank_highlight_duration = 400
+map y <Plug>(highlightedyank)
 
 command WQ wq
 command Wq wq
@@ -113,6 +132,8 @@ let g:airline_powerline_fonts=1
 let g:airline_theme= 'powerlineish'
 
 " syntastic
+let g:syntastic_sass_checkers=["sasslint"]
+let g:syntastic_scss_checkers=["sasslint"]
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exec = 'eslint_d'
 let g:syntastic_check_on_open = 1
@@ -122,8 +143,8 @@ let g:syntastic_check_on_wq = 0
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore = {
-      \ 'dir': 'node_modules\|DS_Store$\|bower_components\|public1\|.git$\|dist\|ios\|build\|android'
-      \ }
+   \ 'dir': 'node_modules\|DS_Store$\|bower_components\|public\|.git$\|.happypack'
+   \ }
 
 " ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
@@ -131,7 +152,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
 map <leader>e :NERDTreeFind<CR>
-let NERDTreeIgnore=['\.py[cd]$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', 'node_modules', 'public1', 'build', 'bower_components', '.DS_Store', '\.sublime-project$', '\.sublime-workspace$', 'dist']
+let NERDTreeIgnore=['\.py[cd]$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', 'node_modules', 'public', 'build', 'bower_components', '.DS_Store', '\.sublime-project$', '\.sublime-workspace$', 'dist']
 let NERDTreeChDirMode=0
 let NERDTreeQuitOnOpen=1
 
@@ -186,6 +207,8 @@ let g:neoformat_javascript_standard = {
       \ 'stdin': 1,
       \ }
 
-let g:neoformat_enabled_javascript = ['standard']
+let g:neoformat_enabled_javascript = ['eslint_d']
 :nmap <C-i> :Neoformat<CR>
 
+" wakatime
+let g:wakatime_PythonBinary = '/usr/bin/python'  " (Default: 'python')
