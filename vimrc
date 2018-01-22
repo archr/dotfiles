@@ -28,6 +28,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'machakann/vim-highlightedyank'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'colepeters/spacemacs-theme.vim'
+Plug 'easymotion/vim-easymotion'
 
 " javascript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
@@ -52,18 +53,6 @@ filetype indent on
 let mapleader = ','
 
 colorscheme default
-
-if has('gui_running')
-  set noeb vb t_vb=
-  set anti enc=utf-8
-  set guifont=Source\ Code\ Pro:h13
-  set lines=80 columns=180 linespace=0
-  set transparency=2
-  colorscheme space-vim-dark
-  let g:space_vim_dark_background = 234
-  hi Comment cterm=italic
-endif
-
 set background=dark
 set mouse=a
 set tabstop=2
@@ -98,8 +87,8 @@ set nowritebackup
 set relativenumber
 
 " Color colum max 120
-set colorcolumn=120
-highlight ColorColumn ctermbg=gray
+" set colorcolumn=120
+" highlight ColorColumn ctermbg=gray
 let g:highlightedyank_highlight_duration = 400
 map y <Plug>(highlightedyank)
 
@@ -140,6 +129,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " ctrlp.vim
+map <leader>lc :CtrlP<CR><C-\>c
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_custom_ignore = {
@@ -148,6 +138,10 @@ let g:ctrlp_custom_ignore = {
 
 " ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackhighlight = 1
+let g:ack_autoclose = 1
+
+noremap <Leader>a :Ack <cword><cr>
 
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
@@ -212,3 +206,16 @@ let g:neoformat_enabled_javascript = ['eslint_d']
 
 " wakatime
 let g:wakatime_PythonBinary = '/usr/bin/python'  " (Default: 'python')
+
+if has('gui_running')
+  set noeb vb t_vb=
+  set anti enc=utf-8
+  set guifont=Roboto\ Mono\ for\ Powerline:h14
+  set lines=80 columns=180 linespace=0
+  set transparency=2
+  colorscheme space-vim-dark
+  let g:airline_theme='minimalist'
+  let g:space_vim_dark_background = 234
+  hi Comment cterm=italic
+endif
+
