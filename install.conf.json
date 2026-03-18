@@ -3,6 +3,9 @@
     "clean": ["~", "~/.config"]
   },
   {
+    "create": ["~/.config/ghostty"]
+  },
+  {
     "link": {
       "~/.tmux.conf": {
         "force": true,
@@ -11,6 +14,10 @@
       "~/.config/nvim/init.lua": {
         "force": true,
         "path": "nvim/init.lua"
+      },
+      "~/.config/ghostty/config": {
+        "force": true,
+        "path": "ghostty/config"
       }
     }
   }

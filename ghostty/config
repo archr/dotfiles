@@ -1,0 +1,30 @@
+# Ghostty terminal configuration
+# https://ghostty.org/docs/config
+
+maximize = true
+
+# Opacity
+background-opacity = 0.90
+background-blur-radius = 20
+unfocused-split-opacity = 0.7
+
+font-family = JetBrainsMono Nerd Font
+font-size = 13
+
+# Theme
+theme = GitLab Dark
+
+# Toggle zoom para "ocultar" el otro panel
+keybind = super+shift+m=toggle_split_zoom
+
+# Igualar tamaño de splits
+keybind = ctrl+shift+equal=equalize_splits
+
+# Redimensionar splits
+keybind = super+ctrl+h=resize_split:left,50
+keybind = super+ctrl+l=resize_split:right,50
+
+desktop-notifications = true
+
+# Fix Shift+Enter for Claude Code (sends literal newline instead of CSI u sequence)
+keybind = shift+enter=text:\n
