@@ -1,34 +1,17 @@
 [
   {
-    "clean": ["~"]
+    "clean": ["~", "~/.config"]
   },
   {
     "link": {
-      "~/.zshrc": {
+      "~/.tmux.conf": {
         "force": true,
-        "path": "zshrc"
+        "path": "tmux.conf"
       },
-      "~/.vimrc": {
+      "~/.config/nvim/init.lua": {
         "force": true,
-        "path": "vimrc"
-      },
-      "~/.gitconfig": {
-        "force": true,
-        "path": "gitconfig"
-      },
-      "~/.gitignore_global": {
-        "force": true,
-        "path": "gitignore_global"
-      },
-      "~/.oh-my-zsh": {
-        "force": true,
-        "path": "oh-my-zsh"
+        "path": "nvim/init.lua"
       }
     }
-  },
-  {
-    "shell": [
-      ["git submodule update --init --recursive", "Installing submodules"]
-    ]
   }
 ]
