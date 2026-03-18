@@ -3,7 +3,7 @@
     "clean": ["~", "~/.config"]
   },
   {
-    "create": ["~/.config/ghostty"]
+    "create": ["~/.config/ghostty", "~/.local/bin"]
   },
   {
     "link": {
@@ -18,6 +18,26 @@
       "~/.config/ghostty/config": {
         "force": true,
         "path": "ghostty/config"
+      },
+      "~/.local/bin/merge-to-dev.sh": {
+        "force": true,
+        "path": "bin/merge-to-dev.sh"
+      },
+      "~/.local/bin/pull-main.sh": {
+        "force": true,
+        "path": "bin/pull-main.sh"
+      },
+      "~/.local/bin/push-no-verify.sh": {
+        "force": true,
+        "path": "bin/push-no-verify.sh"
+      },
+      "~/.local/bin/tmux-claude-status": {
+        "force": true,
+        "path": "bin/tmux-claude-status"
+      },
+      "~/.local/bin/tmux-pr-status": {
+        "force": true,
+        "path": "bin/tmux-pr-status"
       }
     }
   }

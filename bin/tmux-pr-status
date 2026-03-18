@@ -1,0 +1,122 @@
+#!/bin/bash
+# tmux-pr-status - Show GitHub PR status for current branch
+# Usage: tmux-pr-status "/path/to/repo"
+# Output: Formatted tmux status string or empty if no PR
+
+set -e
+
+PANE_PATH="${1:-$(pwd)}"
+CACHE_DIR="$HOME/.cache/tmux-pr-status"
+CACHE_TTL=60  # seconds
+
+# Fail silently for any error
+trap 'exit 0' ERR
+
+# Check if directory exists and is a git repo
+cd "$PANE_PATH" 2>/dev/null || exit 0
+git rev-parse --git-dir >/dev/null 2>&1 || exit 0
+
+# Get current branch
+BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null) || exit 0
+
+# Skip main/master branches
+[[ "$BRANCH" == "main" || "$BRANCH" == "master" ]] && exit 0
+
+# Generate cache key from repo root path
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+REPO_HASH=$(echo -n "$REPO_ROOT" | md5)
+BRANCH_SAFE=$(echo "$BRANCH" | tr '/' '__')
+CACHE_FILE="$CACHE_DIR/${REPO_HASH}_${BRANCH_SAFE}.cache"
+
+# Ensure cache directory exists
+mkdir -p "$CACHE_DIR"
+
+# Check cache freshness
+if [[ -f "$CACHE_FILE" ]]; then
+    CACHE_AGE=$(($(date +%s) - $(stat -f %m "$CACHE_FILE")))
+    if [[ $CACHE_AGE -lt $CACHE_TTL ]]; then
+        cat "$CACHE_FILE"
+        exit 0
+    fi
+fi
+
+# Fetch PR data from GitHub
+PR_JSON=$(gh pr view --json state,reviewDecision,statusCheckRollup,isDraft 2>/dev/null) || {
+    # No PR for this branch - cache empty result
+    echo -n "" > "$CACHE_FILE"
+    exit 0
+}
+
+# Parse PR data
+STATE=$(echo "$PR_JSON" | jq -r '.state // empty')
+IS_DRAFT=$(echo "$PR_JSON" | jq -r '.isDraft // false')
+REVIEW=$(echo "$PR_JSON" | jq -r '.reviewDecision // empty')
+CI_STATUS=$(echo "$PR_JSON" | jq -r '
+    .statusCheckRollup
+    | if . == null or length == 0 then "NONE"
+    elif any(.conclusion == "FAILURE" or .conclusion == "CANCELLED") then "FAILURE"
+    elif any(.status == "IN_PROGRESS" or .status == "QUEUED" or .status == "PENDING") then "PENDING"
+    elif all(.conclusion == "SUCCESS" or .conclusion == "SKIPPED" or .conclusion == "NEUTRAL") then "SUCCESS"
+    else "UNKNOWN"
+    end
+')
+
+# Skip closed/merged PRs
+[[ "$STATE" != "OPEN" ]] && {
+    echo -n "" > "$CACHE_FILE"
+    exit 0
+}
+
+# Dracula colors
+GREEN="#39d353"
+PURPLE="#bd93f9"
+ORANGE="#ffb86c"
+RED="#ff5555"
+YELLOW="#f1fa8c"
+GRAY="#6272a4"
+
+# Build output
+OUTPUT=""
+
+# Draft PR indicator
+if [[ "$IS_DRAFT" == "true" ]]; then
+    OUTPUT="#[fg=$GRAY]◇ "
+else
+    # Review status indicator
+    case "$REVIEW" in
+        "APPROVED")
+            OUTPUT="#[fg=$GREEN]✓"
+            ;;
+        "CHANGES_REQUESTED")
+            OUTPUT="#[fg=$ORANGE]!"
+            ;;
+        "REVIEW_REQUIRED"|"")
+            OUTPUT="#[fg=$PURPLE]◎"
+            ;;
+        *)
+            OUTPUT="#[fg=$GRAY]○"
+            ;;
+    esac
+
+    # CI status indicator
+    case "$CI_STATUS" in
+        "SUCCESS")
+            OUTPUT="${OUTPUT}#[fg=$GREEN]✓"
+            ;;
+        "FAILURE")
+            OUTPUT="${OUTPUT}#[fg=$RED]✗"
+            ;;
+        "PENDING")
+            OUTPUT="${OUTPUT}#[fg=$YELLOW]○"
+            ;;
+        *)
+            # No CI or unknown - skip CI indicator
+            ;;
+    esac
+
+    OUTPUT="${OUTPUT} "
+fi
+
+# Cache and output result
+echo -n "$OUTPUT" > "$CACHE_FILE"
+cat "$CACHE_FILE"
