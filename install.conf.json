@@ -38,6 +38,10 @@
       "~/.local/bin/tmux-pr-status": {
         "force": true,
         "path": "bin/tmux-pr-status"
+      },
+      "~/.zshrc": {
+        "force": true,
+        "path": "zshrc"
       }
     }
   }
