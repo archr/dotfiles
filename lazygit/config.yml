@@ -2,15 +2,15 @@ os:
   shellCmdFlag: -ic
 
 customCommands:
-  - key: "O"
+  - key: "B"
     context: "global"
     command: "gh browse"
     description: "Open repo in GitHub"
-  - key: "o"
+  - key: "b"
     context: "localBranches"
     command: "gh browse --branch {{.SelectedLocalBranch.Name}}"
     description: "Open branch in GitHub"
-  - key: "o"
+  - key: "b"
     context: "files"
     command: "gh browse {{.SelectedFile.Name}}"
     description: "Open file in GitHub"

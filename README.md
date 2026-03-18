@@ -44,7 +44,7 @@ This creates symlinks for:
 - `~/.config/nvim/init.lua` - Neovim config
 - `~/.tmux.conf` - Tmux config
 - `~/.config/ghostty/config` - Ghostty config
-- `~/.config/lazygit/config.yml` - Lazygit config
+- `~/Library/Application Support/lazygit/config.yml` - Lazygit config
 - `~/.zshrc` - Zsh config
 - `~/.local/bin/` - Utility scripts
 
@@ -52,6 +52,6 @@ This creates symlinks for:
 
 | Key | Context | Action |
 |-----|---------|--------|
-| `O` | Global | Open repository in GitHub |
-| `o` | Branches | Open selected branch in GitHub |
-| `o` | Files | Open selected file in GitHub |
+| `B` | Global | Open repository in GitHub |
+| `b` | Branches | Open selected branch in GitHub |
+| `b` | Files | Open selected file in GitHub |

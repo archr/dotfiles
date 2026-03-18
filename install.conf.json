@@ -3,7 +3,7 @@
     "clean": ["~", "~/.config"]
   },
   {
-    "create": ["~/.config/ghostty", "~/.config/lazygit", "~/.local/bin"]
+    "create": ["~/.config/ghostty", "~/Library/Application Support/lazygit", "~/.local/bin"]
   },
   {
     "link": {
@@ -43,7 +43,7 @@
         "force": true,
         "path": "zshrc"
       },
-      "~/.config/lazygit/config.yml": {
+      "~/Library/Application Support/lazygit/config.yml": {
         "force": true,
         "path": "lazygit/config.yml"
       }
