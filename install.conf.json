@@ -39,6 +39,10 @@
         "force": true,
         "path": "bin/tmux-pr-status"
       },
+      "~/.local/bin/tmux-nvim-popup": {
+        "force": true,
+        "path": "bin/tmux-nvim-popup"
+      },
       "~/.zshrc": {
         "force": true,
         "path": "zshrc"

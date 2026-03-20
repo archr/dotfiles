@@ -1,0 +1,19 @@
+#!/bin/bash
+# tmux-nvim-popup: Abre nvim en popup flotante con sesión persistente por ventana
+#
+# Cada ventana tmux tiene su propia sesión de nvim que persiste al cerrar el popup.
+# Al reabrir, reconecta a la misma sesión con todos los buffers/estado intacto.
+
+TMUX_SESSION=$(tmux display-message -p '#S')
+WINDOW_NAME=$(tmux display-message -p '#W')
+NVIM_SESSION="nvim-${TMUX_SESSION}-${WINDOW_NAME}"
+PWD=$(tmux display-message -p '#{pane_current_path}')
+
+# Verificar si la sesión nvim ya existe para esta ventana
+if tmux has-session -t "$NVIM_SESSION" 2>/dev/null; then
+    # Sesión existe - conectar a ella
+    tmux display-popup -E -w 90% -h 90% "tmux attach-session -t '$NVIM_SESSION'"
+else
+    # Crear nueva sesión con nvim en el directorio actual
+    tmux display-popup -E -w 90% -h 90% "tmux new-session -s '$NVIM_SESSION' -c '$PWD' 'nvim'"
+fi
