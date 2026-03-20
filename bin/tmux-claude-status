@@ -37,7 +37,7 @@ while IFS='|' read -r tty win_idx win_name cmd; do
 
         output="$output $indicator"
     fi
-done < <(tmux list-panes -a -F "#{pane_tty}|#{window_index}|#{window_name}|#{pane_current_command}" 2>/dev/null)
+done < <(tmux list-panes -s -F "#{pane_tty}|#{window_index}|#{window_name}|#{pane_current_command}" 2>/dev/null)
 
 # Output trimmed result
 echo "${output# }"
