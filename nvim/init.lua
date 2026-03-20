@@ -234,6 +234,13 @@ require("lazy").setup({
         automatic_installation = true,
       })
 
+      -- Add cmp capabilities to LSP
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      if ok then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
+
       -- keymaps LSP: se registran cuando un servidor se adjunta al buffer
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(event)
@@ -256,8 +263,9 @@ require("lazy").setup({
       })
 
       -- nueva API: vim.lsp.config en lugar de lspconfig[server].setup()
-      vim.lsp.config("ts_ls",        {})
+      vim.lsp.config("ts_ls",        { capabilities = capabilities })
       vim.lsp.config("elixirls",     {
+        capabilities = capabilities,
         settings = {
           elixirLS = {
             dialyzerEnabled    = false,  -- desactivar dialyzer (muy lento al inicio)
@@ -268,9 +276,10 @@ require("lazy").setup({
         }
       })
       vim.lsp.config("lua_ls",       {
+        capabilities = capabilities,
         settings = { Lua = { diagnostics = { globals = { "vim" } } } }
       })
-      vim.lsp.config("rust_analyzer", {})
+      vim.lsp.config("rust_analyzer", { capabilities = capabilities })
 
       vim.lsp.enable({ "ts_ls", "elixirls", "lua_ls", "rust_analyzer" })
 
@@ -280,6 +289,50 @@ require("lazy").setup({
         callback = function()
           vim.lsp.buf.format({ async = false })
         end,
+      })
+    end,
+  },
+
+  -- ── Autocomplete: nvim-cmp ──────────────────────────────────────────────
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+    },
+    config = function()
+      local cmp = require("cmp")
+      cmp.setup({
+        mapping = cmp.mapping.preset.insert({
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+        }),
+        sources = cmp.config.sources({
+          { name = "nvim_lsp", priority = 1000 },
+          { name = "buffer",   priority = 500 },
+          { name = "path",     priority = 250 },
+        }),
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.menu = ({
+              nvim_lsp = "[LSP]",
+              buffer   = "[Buf]",
+              path     = "[Path]",
+            })[entry.source.name]
+            return vim_item
+          end,
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
       })
     end,
   },

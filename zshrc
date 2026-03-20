@@ -119,6 +119,9 @@ export PATH="$PATH:/Users/antonio/.lmstudio/bin"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
+# Ollama server on local network
+export OLLAMA_URL="http://192.168.0.111:11434"
+
 # bun completions
 [ -s "/Users/antonio/.bun/_bun" ] && source "/Users/antonio/.bun/_bun"
 
