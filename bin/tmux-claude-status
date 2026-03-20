@@ -2,7 +2,13 @@
 # Display Claude Code instance states for tmux status bar
 
 STATE_DIR="/tmp/claude-state"
+CURRENT_WIN="$1"  # Current window index passed from tmux
 output=""
+
+# Colors
+yellow="#[fg=#ffb86c]"
+grey="#[fg=#6272a4]"
+reset="#[fg=#f8f8f2]"
 
 # Get all tmux panes with Claude running
 # pane_current_command shows version number (e.g., "2.1.19") for Claude
@@ -19,16 +25,23 @@ while IFS='|' read -r tty win_idx win_name cmd; do
             state="WORKING"
         fi
 
+        # Yellow only for current window, grey for others
+        if [[ "$win_idx" == "$CURRENT_WIN" ]]; then
+            num_color="$yellow"
+        else
+            num_color="$grey"
+        fi
+
         # Format with emojis
         case "$state" in
             APPROVAL)
-                indicator="${win_idx}:🔔"
+                indicator="${num_color}${win_idx}${reset}:🔔"
                 ;;
             DONE)
-                indicator="${win_idx}:✅"
+                indicator="${num_color}${win_idx}${reset}:✅"
                 ;;
             *)
-                indicator="${win_idx}:🔄"
+                indicator="${num_color}${win_idx}${reset}:🔄"
                 ;;
         esac
 
