@@ -19,19 +19,16 @@ while IFS='|' read -r tty win_idx win_name cmd; do
             state="WORKING"
         fi
 
-        # Format with colors (Dracula theme)
+        # Format with emojis
         case "$state" in
             APPROVAL)
-                # Yellow - needs attention
-                indicator="#[fg=#f1fa8c]${win_idx}:?#[default]"
+                indicator="${win_idx}:🔔"
                 ;;
             DONE)
-                # Green - finished
-                indicator="#[fg=#50fa7b]${win_idx}:!#[default]"
+                indicator="${win_idx}:✅"
                 ;;
             *)
-                # Cyan - working
-                indicator="#[fg=#8be9fd]${win_idx}:+#[default]"
+                indicator="${win_idx}:🔄"
                 ;;
         esac
 
