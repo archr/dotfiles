@@ -84,13 +84,18 @@ require("lazy").setup({
 
   -- ── Colorscheme ─────────────────────────────────────────────────────────
   {
-    "dracula/vim",
-    name     = "dracula",
+    "scottmckendry/cyberdream.nvim",
+    lazy = false,
     priority = 1000,
-    config   = function()
-      vim.cmd.colorscheme("dracula")
-      -- Colores sutiles para ventanas inactivas (compatible con Dracula)
-      vim.api.nvim_set_hl(0, "NormalNC", { bg = "#21222c", fg = "#6272a4" })
+    config = function()
+      require("cyberdream").setup({
+        transparent = true,           -- works with Ghostty opacity
+        italic_comments = true,
+        borderless_telescope = false,
+      })
+      vim.cmd.colorscheme("cyberdream")
+      -- Subtle colors for inactive windows
+      vim.api.nvim_set_hl(0, "NormalNC", { fg = "#7b8496" })
     end,
   },
 
@@ -410,7 +415,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
-        theme = "dracula",
+        theme = "cyberdream",
         section_separators   = "",
         component_separators = "│",
       },
@@ -430,6 +435,14 @@ require("lazy").setup({
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts  = {},
+  },
+
+  -- ── Markdown preview ────────────────────────────────────────────────────
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = "cd app && npx --yes yarn install",
   },
 
 }, {
@@ -502,6 +515,9 @@ end, { desc = "mix test (todo el proyecto)" })
 map("n", "<leader>mf", function()
   vim.lsp.buf.format({ async = false })
 end, { desc = "mix format" })
+
+-- ── Markdown ───────────────────────────────────────────────────────────────
+map("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle markdown preview" })
 
 -- ── Yank (copiar paths y código con contexto) ──────────────────────────────
 -- Absolute file path
@@ -594,4 +610,7 @@ end, { desc = "Yank selection with context" })
 --   <leader>yp  → copiar ruta absoluta
 --   <leader>yr  → copiar ruta relativa
 --   <leader>yc  → (visual) copiar código con file:line contexto
+--
+-- MARKDOWN
+--   <leader>mp  → toggle markdown preview in browser
 -- =============================================================================
