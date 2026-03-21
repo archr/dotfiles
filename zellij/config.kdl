@@ -155,6 +155,17 @@ keybinds clear-defaults=true {
         bind "Alt p" { TogglePaneInGroup; }
         bind "Alt Shift p" { ToggleGroupMarking; }
         bind "Ctrl q" { Quit; }
+        // Lazygit en pane flotante centrado (90% de pantalla)
+        bind "Alt g" {
+            Run "lazygit" {
+                floating true
+                close_on_exit true
+                width "90%"
+                height "90%"
+                x "5%"
+                y "5%"
+            }
+        }
     }
     shared_except "locked" "move" {
         bind "Alt m" { SwitchToMode "move"; }
