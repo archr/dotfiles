@@ -42,6 +42,12 @@ vim.opt.updatetime     = 250    -- diagnósticos LSP más rápidos
 vim.opt.signcolumn     = "yes"  -- columna de signos siempre visible (evita saltos)
 vim.opt.clipboard = "unnamedplus"
 
+-- Indentación de 2 espacios
+vim.opt.tabstop     = 2
+vim.opt.shiftwidth  = 2
+vim.opt.expandtab   = true
+vim.opt.smartindent = true
+
 -- ── Indicador visual de foco ───────────────────────────────────────────────
 -- Atenúa sutilmente ventanas sin foco (dentro de Neovim y cuando foco va a tmux)
 vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter", "FocusGained" }, {
@@ -97,6 +103,21 @@ require("lazy").setup({
       -- Subtle colors for inactive windows
       vim.api.nvim_set_hl(0, "NormalNC", { fg = "#7b8496" })
     end,
+  },
+
+  -- ── Dressing: mejor UI para vim.ui.select y vim.ui.input ─────────────────
+  {
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+    opts = {
+      select = {
+        backend = { "builtin" },  -- builtin es más limpio para menús pequeños
+        builtin = {
+          relative = "cursor",
+          min_width = { 30, 0.2 },
+        },
+      },
+    },
   },
 
   -- ── Telescope: fuzzy finder central ─────────────────────────────────────
@@ -254,7 +275,22 @@ require("lazy").setup({
           end
 
           local tb = require("telescope.builtin")
-          map("gd",         tb.lsp_definitions,               "Go to Definition")
+          map("gd", function()
+            vim.ui.select(
+              { "current window", "horizontal split", "vertical split", "new tab" },
+              { prompt = "Open definition in:" },
+              function(choice)
+                if not choice then return end
+                local cmds = {
+                  ["horizontal split"] = "split",
+                  ["vertical split"] = "vsplit",
+                  ["new tab"] = "tab split",
+                }
+                if cmds[choice] then vim.cmd(cmds[choice]) end
+                vim.lsp.buf.definition()
+              end
+            )
+          end, "Go to Definition")
           map("gr",         tb.lsp_references,                "Go to References")
           map("gI",         tb.lsp_implementations,           "Go to Implementation")
           map("<leader>D",  tb.lsp_type_definitions,          "Type Definition")
@@ -396,6 +432,26 @@ require("lazy").setup({
       { "<C-l>", "<cmd>TmuxNavigateRight<CR>" },
       { "<C-\\>", "<cmd>TmuxNavigatePrevious<CR>" },
     },
+    cond = function()
+      return vim.env.TMUX ~= nil  -- solo cargar si estamos en tmux
+    end,
+  },
+
+  -- ── Navegación zellij <-> vim ────────────────────────────────────────────
+  {
+    "swaits/zellij-nav.nvim",
+    lazy = true,
+    event = "VeryLazy",
+    keys = {
+      { "<C-h>", "<cmd>ZellijNavigateLeftTab<CR>",  { silent = true, desc = "navigate left or tab" } },
+      { "<C-j>", "<cmd>ZellijNavigateDown<CR>",  { silent = true, desc = "navigate down" } },
+      { "<C-k>", "<cmd>ZellijNavigateUp<CR>",    { silent = true, desc = "navigate up" } },
+      { "<C-l>", "<cmd>ZellijNavigateRightTab<CR>", { silent = true, desc = "navigate right or tab" } },
+    },
+    opts = {},
+    cond = function()
+      return vim.env.ZELLIJ ~= nil  -- solo cargar si estamos en zellij
+    end,
   },
 
   -- ── Git signs en el gutter ───────────────────────────────────────────────

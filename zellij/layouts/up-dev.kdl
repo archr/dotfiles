@@ -1,0 +1,22 @@
+layout {
+    pane split_direction="vertical" {
+        // Left: code agent
+        pane size="50%" {
+            name "code"
+            cwd "~/utility/utilityprofit"
+        }
+
+        // Right: two stacked panes
+        pane stacked=true size="50%" {
+                pane {
+                    name "editor"
+                    cwd "~/utility/utilityprofit"
+                }
+                pane {
+                    name "server"
+                    command "bash"
+                    args "-c" "cd ~/utility/utilityprofit && npm run web-api"
+                }
+        }
+    }
+}

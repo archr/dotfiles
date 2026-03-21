@@ -3,7 +3,7 @@
     "clean": ["~", "~/.config"]
   },
   {
-    "create": ["~/.config/ghostty", "~/Library/Application Support/lazygit", "~/.local/bin"]
+    "create": ["~/.config/ghostty", "~/Library/Application Support/lazygit", "~/.local/bin", "~/.claude", "~/.config/zellij"]
   },
   {
     "link": {
@@ -43,6 +43,10 @@
         "force": true,
         "path": "bin/tmux-nvim-popup"
       },
+      "~/.local/bin/tmux-terminal-popup": {
+        "force": true,
+        "path": "bin/tmux-terminal-popup"
+      },
       "~/.zshrc": {
         "force": true,
         "path": "zshrc"
@@ -50,6 +54,22 @@
       "~/Library/Application Support/lazygit/config.yml": {
         "force": true,
         "path": "lazygit/config.yml"
+      },
+      "~/.local/bin/claude-notify": {
+        "force": true,
+        "path": "bin/claude-notify"
+      },
+      "~/.claude/settings.json": {
+        "force": true,
+        "path": "claude/settings.json"
+      },
+      "~/.config/zellij/config.kdl": {
+        "force": true,
+        "path": "zellij/config.kdl"
+      },
+      "~/.config/zellij/layouts": {
+        "force": true,
+        "path": "zellij/layouts"
       }
     }
   }

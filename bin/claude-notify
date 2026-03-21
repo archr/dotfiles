@@ -1,0 +1,33 @@
+#!/bin/zsh
+set -e
+
+NOTIFY_TYPE="${1:-approval}"
+PROJECT_DIR="${PWD##*/}"
+TMUX_SESSION=""
+
+if [[ -n "$TMUX" ]]; then
+    TMUX_SESSION=$(tmux display-message -p '#S')
+fi
+
+case "$NOTIFY_TYPE" in
+    approval)
+        TITLE="🔔 Claude necesita atención"
+        SOUND="Glass"
+        ;;
+    done)
+        TITLE="✅ Claude terminó"
+        SOUND="Ping"
+        ;;
+    error)
+        TITLE="❌ Claude error"
+        SOUND="Basso"
+        ;;
+esac
+
+if [[ -n "$TMUX_SESSION" ]]; then
+    MESSAGE="[$TMUX_SESSION]: $PROJECT_DIR"
+else
+    MESSAGE="$PROJECT_DIR"
+fi
+
+osascript -e "display notification \"$MESSAGE\" with title \"$TITLE\" sound name \"$SOUND\"" 2>/dev/null || true

@@ -1,0 +1,11 @@
+#!/bin/bash
+TMUX_SESSION=$(tmux display-message -p '#S')
+WINDOW_NAME=$(tmux display-message -p '#W')
+TERM_SESSION="term-${TMUX_SESSION}-${WINDOW_NAME}"
+PWD=$(tmux display-message -p '#{pane_current_path}')
+
+if tmux has-session -t "$TERM_SESSION" 2>/dev/null; then
+    tmux display-popup -E -w 80% -h 80% "tmux attach-session -t '$TERM_SESSION'"
+else
+    tmux display-popup -E -w 80% -h 80% "tmux new-session -s '$TERM_SESSION' -c '$PWD'"
+fi

@@ -28,3 +28,6 @@ desktop-notifications = true
 
 # Fix Shift+Enter for Claude Code (sends literal newline instead of CSI u sequence)
 keybind = shift+enter=text:\n
+
+# Make Option key work as Alt for terminal keybindings (Zellij, tmux, etc.)
+macos-option-as-alt = true

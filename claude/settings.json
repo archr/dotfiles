@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(nx test:*)",
+      "mcp__pencil"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.local/bin/claude-notify approval"
+          },
+          {
+            "type": "command",
+            "command": "mkdir -p /tmp/claude-state && echo APPROVAL > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.local/bin/claude-notify done"
+          },
+          {
+            "type": "command",
+            "command": "mkdir -p /tmp/claude-state && echo DONE > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p /tmp/claude-state && echo WORKING > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "frontend-design@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "skipDangerousModePermissionPrompt": true
+}
