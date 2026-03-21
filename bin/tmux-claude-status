@@ -5,10 +5,10 @@ STATE_DIR="/tmp/claude-state"
 CURRENT_WIN="$1"  # Current window index passed from tmux
 output=""
 
-# Colors
-yellow="#[fg=#ffb86c]"
-grey="#[fg=#6272a4]"
-reset="#[fg=#f8f8f2]"
+# Colors from environment (see zshrc TMUX_COLOR_*)
+yellow="#[fg=${TMUX_COLOR_YELLOW:-#ffb86c},bold]"
+grey="#[fg=${TMUX_COLOR_GREY:-#6272a4}]"
+reset="#[fg=${TMUX_COLOR_WHITE:-#f8f8f2},nobold]"
 
 # Get all tmux panes with Claude running
 # pane_current_command shows version number (e.g., "2.1.19") for Claude

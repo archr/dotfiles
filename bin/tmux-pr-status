@@ -67,56 +67,56 @@ CI_STATUS=$(echo "$PR_JSON" | jq -r '
     exit 0
 }
 
-# Dracula colors
-GREEN="#39d353"
-PURPLE="#bd93f9"
-ORANGE="#ffb86c"
-RED="#ff5555"
-YELLOW="#f1fa8c"
-GRAY="#6272a4"
+# Colors from environment (see zshrc TMUX_COLOR_*)
+green="${TMUX_COLOR_GREEN:-#39d353}"
+purple="${TMUX_COLOR_PURPLE:-#bd93f9}"
+orange="${TMUX_COLOR_YELLOW:-#ffb86c}"
+red="${TMUX_COLOR_RED:-#ff5555}"
+yellow="#f1fa8c"  # CI pending (lighter yellow, not in palette)
+grey="${TMUX_COLOR_GREY:-#6272a4}"
 
 # Build output
-OUTPUT=""
+output=""
 
 # Draft PR indicator
 if [[ "$IS_DRAFT" == "true" ]]; then
-    OUTPUT="#[fg=$GRAY]◇ "
+    output="#[fg=$grey]◇ "
 else
     # Review status indicator
     case "$REVIEW" in
         "APPROVED")
-            OUTPUT="#[fg=$GREEN]✓"
+            output="#[fg=$green]✓"
             ;;
         "CHANGES_REQUESTED")
-            OUTPUT="#[fg=$ORANGE]!"
+            output="#[fg=$orange]!"
             ;;
         "REVIEW_REQUIRED"|"")
-            OUTPUT="#[fg=$PURPLE]◎"
+            output="#[fg=$purple]◎"
             ;;
         *)
-            OUTPUT="#[fg=$GRAY]○"
+            output="#[fg=$grey]○"
             ;;
     esac
 
     # CI status indicator
     case "$CI_STATUS" in
         "SUCCESS")
-            OUTPUT="${OUTPUT}#[fg=$GREEN]✓"
+            output="${output}#[fg=$green]✓"
             ;;
         "FAILURE")
-            OUTPUT="${OUTPUT}#[fg=$RED]✗"
+            output="${output}#[fg=$red]✗"
             ;;
         "PENDING")
-            OUTPUT="${OUTPUT}#[fg=$YELLOW]○"
+            output="${output}#[fg=$yellow]○"
             ;;
         *)
             # No CI or unknown - skip CI indicator
             ;;
     esac
 
-    OUTPUT="${OUTPUT} "
+    output="${output} "
 fi
 
 # Cache and output result
-echo -n "$OUTPUT" > "$CACHE_FILE"
+echo -n "$output" > "$CACHE_FILE"
 cat "$CACHE_FILE"

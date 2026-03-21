@@ -122,6 +122,16 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 # Ollama server on local network
 export OLLAMA_URL="http://192.168.0.111:11434"
 
+# Dracula theme colors for tmux scripts (tmux-claude-status, tmux-pr-status)
+export TMUX_COLOR_YELLOW="#ffb86c"
+export TMUX_COLOR_PURPLE="#bd93f9"
+export TMUX_COLOR_GREY="#6272a4"
+export TMUX_COLOR_WHITE="#f8f8f2"
+export TMUX_COLOR_GREEN="#39d353"
+export TMUX_COLOR_PINK="#ff79c6"
+export TMUX_COLOR_RED="#ff5555"
+export TMUX_COLOR_DARK="#44475a"
+
 # bun completions
 [ -s "/Users/antonio/.bun/_bun" ] && source "/Users/antonio/.bun/_bun"
 
