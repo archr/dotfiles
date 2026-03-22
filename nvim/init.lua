@@ -29,6 +29,10 @@ vim.opt.rtp:prepend(lazypath)
 -- -----------------------------------------------------------------------------
 vim.g.mapleader = " "           -- Space como leader key
 
+-- Deshabilitar netrw (usar Telescope en su lugar)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.opt.number         = true   -- números de línea
 vim.opt.relativenumber = true   -- números relativos (útil para saltar con 10j, etc.)
 vim.opt.ignorecase     = true   -- búsqueda case-insensitive
@@ -105,6 +109,24 @@ require("lazy").setup({
     end,
   },
 
+  -- ── Auto dark mode: sincroniza tema con el sistema ───────────────────────
+  {
+    "f-person/auto-dark-mode.nvim",
+    opts = {
+      update_interval = 1000,
+      set_dark_mode = function()
+        vim.opt.background = "dark"
+        vim.cmd.colorscheme("cyberdream")
+        vim.api.nvim_set_hl(0, "NormalNC", { fg = "#7b8496" })
+      end,
+      set_light_mode = function()
+        vim.opt.background = "light"
+        vim.cmd.colorscheme("cyberdream")
+        vim.api.nvim_set_hl(0, "NormalNC", { fg = "#7b8496" })
+      end,
+    },
+  },
+
   -- ── Dressing: mejor UI para vim.ui.select y vim.ui.input ─────────────────
   {
     "stevearc/dressing.nvim",
@@ -157,7 +179,7 @@ require("lazy").setup({
               ["<Esc>"] = actions.close,
             },
           },
-          file_ignore_patterns = { "node_modules", ".git/", "dist/", "build/" },
+          file_ignore_patterns = { "node_modules", ".git/", "dist/", "build/", "superpowers" },
         },
         pickers = {
           find_files = {
@@ -275,22 +297,7 @@ require("lazy").setup({
           end
 
           local tb = require("telescope.builtin")
-          map("gd", function()
-            vim.ui.select(
-              { "current window", "horizontal split", "vertical split", "new tab" },
-              { prompt = "Open definition in:" },
-              function(choice)
-                if not choice then return end
-                local cmds = {
-                  ["horizontal split"] = "split",
-                  ["vertical split"] = "vsplit",
-                  ["new tab"] = "tab split",
-                }
-                if cmds[choice] then vim.cmd(cmds[choice]) end
-                vim.lsp.buf.definition()
-              end
-            )
-          end, "Go to Definition")
+          map("gd", vim.lsp.buf.definition, "Go to Definition")
           map("gr",         tb.lsp_references,                "Go to References")
           map("gI",         tb.lsp_implementations,           "Go to Implementation")
           map("<leader>D",  tb.lsp_type_definitions,          "Type Definition")
@@ -500,7 +507,7 @@ require("lazy").setup({
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
-        theme = "cyberdream",
+        theme = "auto",  -- detecta automáticamente el tema (cyberdream light/dark)
         section_separators   = "",
         component_separators = "│",
       },
