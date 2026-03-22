@@ -195,7 +195,7 @@ require("lazy").setup({
       "MunifTanjim/nui.nvim",
     },
     opts = {
-      close_if_last_window = true,   -- cierra nvim si neo-tree es la última ventana
+      -- close_if_last_window = true,   -- cierra nvim si neo-tree es la última ventana
       window = {
         width    = 35,
         position = "left",
@@ -466,6 +466,35 @@ require("lazy").setup({
     },
   },
 
+  -- ── Bufferline: tabs de buffers en la parte superior ────────────────────
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    opts = {
+      options = {
+        mode = "buffers",
+        show_buffer_icons = true,
+        show_buffer_close_icons = false,
+        show_close_icon = false,
+        separator_style = "thin",
+        -- Solo mostrar el nombre del archivo
+        name_formatter = function(buf)
+          return vim.fn.fnamemodify(buf.name, ":t")
+        end,
+        -- Offset para neo-tree
+        offsets = {
+          {
+            filetype = "neo-tree",
+            text = "Files",
+            highlight = "Directory",
+            separator = true,
+          },
+        },
+      },
+    },
+  },
+
   -- ── Statusline mínima ────────────────────────────────────────────────────
   {
     "nvim-lualine/lualine.nvim",
@@ -543,6 +572,12 @@ map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end,       
 
 -- ── Navegación de ventanas ────────────────────────────────────────────────────
 -- Manejado por vim-tmux-navigator (C-h/j/k/l navega entre vim splits y tmux panes)
+
+-- ── Buffers ─────────────────────────────────────────────────────────────────
+map("n", "<S-h>",     "<cmd>BufferLineCyclePrev<CR>", { desc = "Buffer anterior" })
+map("n", "<S-l>",     "<cmd>BufferLineCycleNext<CR>", { desc = "Buffer siguiente" })
+map("n", "<leader>bp", "<cmd>BufferLineTogglePin<CR>", { desc = "Pin buffer" })
+map("n", "<leader>bx", "<cmd>BufferLineCloseOthers<CR>", { desc = "Cerrar otros buffers" })
 
 -- ── Misc ─────────────────────────────────────────────────────────────────────
 map("n", "<leader>q",  "<cmd>bd<CR>",    { desc = "Cerrar buffer" })
@@ -631,13 +666,20 @@ end, { desc = "Yank selection with context" })
 -- =============================================================================
 -- REFERENCIA RÁPIDA DE KEYMAPS
 -- =============================================================================
+-- BUFFERS
+--   Shift+h     → buffer anterior
+--   Shift+l     → buffer siguiente
+--   <leader>bp  → pin buffer
+--   <leader>bx  → cerrar otros buffers
+--   <leader>q   → cerrar buffer actual
+--
 -- BÚSQUEDA
 --   <leader>ff  → fuzzy find archivos del proyecto
 --   <leader>fr  → archivos frecuentes/recientes
 --   <leader>fg  → grep en vivo en todo el proyecto  ← el más usado
 --   <leader>fw  → buscar la palabra bajo el cursor
 --   <leader>f/  → buscar dentro del archivo actual
---   <leader>fb  → cambiar de buffer
+--   <leader>fb  → cambiar de buffer (telescope)
 --
 -- SÍMBOLOS / LSP
 --   <leader>fs  → buscar símbolo en workspace (funciones, clases...)

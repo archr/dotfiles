@@ -134,6 +134,11 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
+        // Ctrl+hjkl para navegación entre panes (compatible con zellij-nav.nvim en nvim)
+        bind "Ctrl h" { MoveFocusOrTab "left"; }
+        bind "Ctrl j" { MoveFocus "down"; }
+        bind "Ctrl k" { MoveFocus "up"; }
+        bind "Ctrl l" { MoveFocusOrTab "right"; }
         bind "Alt left" { MoveFocusOrTab "left"; }
         bind "Alt down" { MoveFocus "down"; }
         bind "Alt up" { MoveFocus "up"; }
