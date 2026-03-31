@@ -151,6 +151,10 @@ esac
 
 alias edit-nvim="nvim ~/.config/nvim/init.lua"
 
+# eza
+alias ls="eza --icons"
+alias ll="eza -la --icons --git"
+alias lt="eza --tree --level=2 --icons"
 
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi

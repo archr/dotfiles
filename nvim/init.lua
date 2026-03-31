@@ -614,6 +614,12 @@ map("n", "<leader>mf", function()
   vim.lsp.buf.format({ async = false })
 end, { desc = "mix format" })
 
+-- Prettier (para archivos JS/TS/TSX/JSON/etc)
+vim.api.nvim_create_user_command("Prettier", function()
+  vim.cmd("!npx prettier --write " .. vim.fn.expand("%"))
+  vim.cmd("e!")
+end, {})
+
 -- ── Markdown ───────────────────────────────────────────────────────────────
 map("n", "<leader>mp", "<cmd>MarkdownPreviewToggle<CR>", { desc = "Toggle markdown preview" })
 

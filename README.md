@@ -20,6 +20,7 @@ My development environment configuration using [Dotbot](https://github.com/anish
 - [lazygit](https://github.com/jesseduffield/lazygit) - Git TUI
 - [gh](https://cli.github.com/) - GitHub CLI (for lazygit custom commands)
 - [oh-my-zsh](https://ohmyz.sh/) - Zsh framework
+- [ezza](https://eza.rocks/) - Eza
 
 ## Install
 
