@@ -529,6 +529,18 @@ require("lazy").setup({
     opts  = {},
   },
 
+  -- ── Búsqueda estilo Sublime (buffer dedicado con preview) ─────────────────
+  {
+    "MagicDuck/grug-far.nvim",
+    config = function()
+      require("grug-far").setup({
+        windowCreationCommand = "topleft vsplit",  -- search a la izquierda, código a la derecha
+        transient = true,                  -- no guardar estado entre sesiones
+        startInInsertMode = true,          -- empezar escribiendo
+      })
+    end,
+  },
+
   -- ── Markdown preview ────────────────────────────────────────────────────
   {
     "iamcco/markdown-preview.nvim",
@@ -559,6 +571,15 @@ map("n", "<leader>fo", tb.oldfiles,                          { desc = "Archivos 
 map("n", "<leader>fg", tb.live_grep,                         { desc = "Live grep (todo el proyecto)" })
 map("n", "<leader>fw", tb.grep_string,                       { desc = "Buscar palabra bajo cursor" })
 map("n", "<leader>f/", tb.current_buffer_fuzzy_find,         { desc = "Buscar en archivo actual" })
+
+-- grug-far: búsqueda con buffer dedicado (estilo Sublime)
+map("n", "<leader>fG", function()
+  require("grug-far").open({ prefills = { paths = vim.fn.getcwd() } })
+end, { desc = "Buscar (buffer dedicado)" })
+
+map("n", "<leader>fW", function()
+  require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
+end, { desc = "Buscar palabra (buffer dedicado)" })
 
 -- ── Navegación de símbolos / LSP ─────────────────────────────────────────────
 -- (los keymaps de LSP se definen en on_attach, arriba)
@@ -690,7 +711,9 @@ end, { desc = "Yank selection with context" })
 --   <leader>ff  → fuzzy find archivos del proyecto
 --   <leader>fr  → archivos frecuentes/recientes
 --   <leader>fg  → grep en vivo en todo el proyecto  ← el más usado
+--   <leader>fG  → buscar en buffer dedicado (estilo Sublime)
 --   <leader>fw  → buscar la palabra bajo el cursor
+--   <leader>fW  → buscar palabra en buffer dedicado
 --   <leader>f/  → buscar dentro del archivo actual
 --   <leader>fb  → cambiar de buffer (telescope)
 --

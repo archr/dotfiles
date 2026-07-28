@@ -1,2 +1,6 @@
 /docs/superpowers/specs
 /.claude/last30days.env
+
+# machine-local secret/override files (never commit)
+*.local
+zshrc.local

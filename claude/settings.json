@@ -1,64 +1,94 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "permissions": {
-    "allow": [
-      "Bash(nx test:*)",
-      "mcp__pencil"
-    ]
+  "agentPushNotifEnabled": true,
+  "effortLevel": "high",
+  "enabledPlugins": {
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "code-review@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "figma@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "chrome-devtools-plugins": {
+      "source": {
+        "repo": "ChromeDevTools/chrome-devtools-mcp",
+        "source": "github"
+      }
+    }
   },
   "hooks": {
     "Notification": [
       {
-        "matcher": "permission_prompt",
         "hooks": [
           {
-            "type": "command",
-            "command": "~/.local/bin/claude-notify approval"
+            "command": "~/.local/bin/claude-notify approval",
+            "type": "command"
           },
           {
-            "type": "command",
-            "command": "mkdir -p /tmp/claude-state && echo APPROVAL > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')"
+            "command": "mkdir -p /tmp/claude-state && echo APPROVAL > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')",
+            "type": "command"
           }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.local/bin/claude-notify done"
-          },
-          {
-            "type": "command",
-            "command": "mkdir -p /tmp/claude-state && echo DONE > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')"
-          }
-        ]
+        ],
+        "matcher": "permission_prompt"
       }
     ],
     "PreToolUse": [
       {
-        "matcher": "",
         "hooks": [
           {
-            "type": "command",
-            "command": "mkdir -p /tmp/claude-state && echo WORKING > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')"
+            "command": "mkdir -p /tmp/claude-state && echo WORKING > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')",
+            "type": "command"
           }
-        ]
+        ],
+        "matcher": ""
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "bash '/Users/antonio/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10,
+            "type": "command"
+          }
+        ],
+        "matcher": "*"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "~/.local/bin/claude-notify done",
+            "type": "command"
+          },
+          {
+            "command": "mkdir -p /tmp/claude-state && echo DONE > /tmp/claude-state/$(ps -o tty= -p $PPID | tr -d ' ')",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
       }
     ]
   },
-  "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true,
-    "claude-mem@thedotmack": true,
-    "frontend-design@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "playwright@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+  "permissions": {
+    "allow": [
+      "Bash(nx test:*)",
+      "mcp__pencil"
+    ],
+    "defaultMode": "auto"
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "light",
+  "tui": "fullscreen",
+  "voiceEnabled": true
 }

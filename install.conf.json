@@ -19,6 +19,10 @@
         "force": true,
         "path": "ghostty/config"
       },
+      "~/.wezterm.lua": {
+        "force": true,
+        "path": "wezterm/wezterm.lua"
+      },
       "~/.local/bin/merge-to-dev.sh": {
         "force": true,
         "path": "bin/merge-to-dev.sh"
