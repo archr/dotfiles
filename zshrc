@@ -72,6 +72,10 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git history-substring-search nvm zoxide zsh-autosuggestions)
 
+# mise (version manager): activa temprano si existe, para que sus tools (eza, zoxide,
+# railway…) estén en PATH antes de los plugins/aliases. No-op en máquinas sin mise (p.ej. Mac).
+[ -x "$HOME/.local/bin/mise" ] && eval "$("$HOME/.local/bin/mise" activate zsh)"
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -141,10 +145,12 @@ esac
 
 alias edit-nvim="nvim ~/.config/nvim/init.lua"
 
-# eza
-alias ls="eza --icons"
-alias ll="eza -la --icons --git"
-alias lt="eza --tree --level=2 --icons"
+# eza (solo si está instalado; si no, deja el ls nativo)
+if command -v eza >/dev/null 2>&1; then
+  alias ls="eza --icons"
+  alias ll="eza -la --icons --git"
+  alias lt="eza --tree --level=2 --icons"
+fi
 
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
@@ -153,5 +159,5 @@ if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)
 [ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 # >>> railway initialize >>>
-source "$HOME/.railway/env"
+[ -f "$HOME/.railway/env" ] && source "$HOME/.railway/env"
 # <<< railway initialize <<<
