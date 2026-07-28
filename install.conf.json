@@ -3,7 +3,7 @@
     "clean": ["~", "~/.config"]
   },
   {
-    "create": ["~/.config/ghostty", "~/Library/Application Support/lazygit", "~/.local/bin", "~/.claude"]
+    "create": ["~/.config/ghostty", "~/Library/Application Support/lazygit", "~/.local/bin", "~/.claude", "~/.config/worktrunk"]
   },
   {
     "link": {
@@ -46,6 +46,10 @@
       "~/.claude/settings.json": {
         "force": true,
         "path": "claude/settings.json"
+      },
+      "~/.config/worktrunk/config.toml": {
+        "force": true,
+        "path": "worktrunk/config.toml"
       }
     }
   }

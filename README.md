@@ -43,6 +43,7 @@ cd ~/dotfiles
 This creates symlinks for:
 
 - `~/.config/nvim/init.lua` - Neovim config
+- `~/.config/worktrunk/config.toml` - worktrunk (wt) config
 - `~/.config/ghostty/config` - Ghostty config
 - `~/.wezterm.lua` - WezTerm config
 - `~/Library/Application Support/lazygit/config.yml` - Lazygit config
