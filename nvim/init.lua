@@ -53,7 +53,7 @@ vim.opt.expandtab   = true
 vim.opt.smartindent = true
 
 -- ── Indicador visual de foco ───────────────────────────────────────────────
--- Atenúa sutilmente ventanas sin foco (dentro de Neovim y cuando foco va a tmux)
+-- Atenúa sutilmente ventanas sin foco dentro de Neovim
 vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter", "FocusGained" }, {
   callback = function()
     vim.opt_local.winhighlight = ""
@@ -422,45 +422,6 @@ require("lazy").setup({
     opts  = {},
   },
 
-  -- ── Navegación tmux <-> vim ────────────────────────────────────────────
-  {
-    "christoomey/vim-tmux-navigator",
-    cmd = {
-      "TmuxNavigateLeft",
-      "TmuxNavigateDown",
-      "TmuxNavigateUp",
-      "TmuxNavigateRight",
-      "TmuxNavigatePrevious",
-    },
-    keys = {
-      { "<C-h>", "<cmd>TmuxNavigateLeft<CR>" },
-      { "<C-j>", "<cmd>TmuxNavigateDown<CR>" },
-      { "<C-k>", "<cmd>TmuxNavigateUp<CR>" },
-      { "<C-l>", "<cmd>TmuxNavigateRight<CR>" },
-      { "<C-\\>", "<cmd>TmuxNavigatePrevious<CR>" },
-    },
-    cond = function()
-      return vim.env.TMUX ~= nil  -- solo cargar si estamos en tmux
-    end,
-  },
-
-  -- ── Navegación zellij <-> vim ────────────────────────────────────────────
-  {
-    "swaits/zellij-nav.nvim",
-    lazy = true,
-    event = "VeryLazy",
-    keys = {
-      { "<C-h>", "<cmd>ZellijNavigateLeftTab<CR>",  { silent = true, desc = "navigate left or tab" } },
-      { "<C-j>", "<cmd>ZellijNavigateDown<CR>",  { silent = true, desc = "navigate down" } },
-      { "<C-k>", "<cmd>ZellijNavigateUp<CR>",    { silent = true, desc = "navigate up" } },
-      { "<C-l>", "<cmd>ZellijNavigateRightTab<CR>", { silent = true, desc = "navigate right or tab" } },
-    },
-    opts = {},
-    cond = function()
-      return vim.env.ZELLIJ ~= nil  -- solo cargar si estamos en zellij
-    end,
-  },
-
   -- ── Git signs en el gutter ───────────────────────────────────────────────
   {
     "lewis6991/gitsigns.nvim",
@@ -599,7 +560,11 @@ map({ "n", "x", "o" }, "s", function() require("flash").jump() end,             
 map({ "n", "x", "o" }, "S", function() require("flash").treesitter() end,        { desc = "Flash Treesitter" })
 
 -- ── Navegación de ventanas ────────────────────────────────────────────────────
--- Manejado por vim-tmux-navigator (C-h/j/k/l navega entre vim splits y tmux panes)
+-- C-h/j/k/l navega entre splits de Neovim (nativo)
+map("n", "<C-h>", "<C-w>h", { desc = "Ventana izquierda" })
+map("n", "<C-j>", "<C-w>j", { desc = "Ventana abajo" })
+map("n", "<C-k>", "<C-w>k", { desc = "Ventana arriba" })
+map("n", "<C-l>", "<C-w>l", { desc = "Ventana derecha" })
 
 -- ── Buffers ─────────────────────────────────────────────────────────────────
 map("n", "<S-h>",     "<cmd>BufferLineCyclePrev<CR>", { desc = "Buffer anterior" })

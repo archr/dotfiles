@@ -3,14 +3,10 @@
     "clean": ["~", "~/.config"]
   },
   {
-    "create": ["~/.config/ghostty", "~/Library/Application Support/lazygit", "~/.local/bin", "~/.claude", "~/.config/zellij"]
+    "create": ["~/.config/ghostty", "~/Library/Application Support/lazygit", "~/.local/bin", "~/.claude"]
   },
   {
     "link": {
-      "~/.tmux.conf": {
-        "force": true,
-        "path": "tmux.conf"
-      },
       "~/.config/nvim/init.lua": {
         "force": true,
         "path": "nvim/init.lua"
@@ -35,22 +31,6 @@
         "force": true,
         "path": "bin/push-no-verify.sh"
       },
-      "~/.local/bin/tmux-claude-status": {
-        "force": true,
-        "path": "bin/tmux-claude-status"
-      },
-      "~/.local/bin/tmux-pr-status": {
-        "force": true,
-        "path": "bin/tmux-pr-status"
-      },
-      "~/.local/bin/tmux-nvim-popup": {
-        "force": true,
-        "path": "bin/tmux-nvim-popup"
-      },
-      "~/.local/bin/tmux-terminal-popup": {
-        "force": true,
-        "path": "bin/tmux-terminal-popup"
-      },
       "~/.zshrc": {
         "force": true,
         "path": "zshrc"
@@ -66,14 +46,6 @@
       "~/.claude/settings.json": {
         "force": true,
         "path": "claude/settings.json"
-      },
-      "~/.config/zellij/config.kdl": {
-        "force": true,
-        "path": "zellij/config.kdl"
-      },
-      "~/.config/zellij/layouts": {
-        "force": true,
-        "path": "zellij/layouts"
       }
     }
   }

@@ -5,18 +5,16 @@ My development environment configuration using [Dotbot](https://github.com/anish
 ## Contents
 
 - **nvim** - Neovim configuration with Lazy.nvim, Telescope, LSP, and Elixir tooling
-- **tmux** - Tmux configuration with vim-tmux-navigator integration and extended-keys support
 - **ghostty** - Ghostty terminal configuration
 - **wezterm** - WezTerm terminal configuration
 - **lazygit** - Lazygit configuration with GitHub integration commands
 - **zshrc** - Zsh configuration with oh-my-zsh
-- **bin** - Utility scripts for git and tmux workflows
+- **bin** - Utility scripts for git workflows
 
 ## Dependencies
 
 - [dotbot](https://github.com/anishathalye/dotbot) - Dotfiles manager
 - [Neovim](https://neovim.io/) - Text editor
-- [tmux](https://github.com/tmux/tmux) - Terminal multiplexer
 - [Ghostty](https://ghostty.org/) - Terminal emulator
 - [WezTerm](https://wezterm.org/) - Terminal emulator
 - [lazygit](https://github.com/jesseduffield/lazygit) - Git TUI
@@ -45,7 +43,6 @@ cd ~/dotfiles
 This creates symlinks for:
 
 - `~/.config/nvim/init.lua` - Neovim config
-- `~/.tmux.conf` - Tmux config
 - `~/.config/ghostty/config` - Ghostty config
 - `~/.wezterm.lua` - WezTerm config
 - `~/Library/Application Support/lazygit/config.yml` - Lazygit config
